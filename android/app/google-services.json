@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1050162376831",
+    "firebase_url": "https://kurir-kopi.firebaseio.com",
+    "project_id": "kurir-kopi",
+    "storage_bucket": "kurir-kopi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050162376831:android:df93e6ce92bc44ce694f4a",
+        "android_client_info": {
+          "package_name": "com.qthasanudin.kurir_kopi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050162376831-fbt0grqh3k8s5q9i7960o79u14rm9ivc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU8Z_ISETLTqgwow2wfRZ6NRFNpKDwVSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050162376831-fbt0grqh3k8s5q9i7960o79u14rm9ivc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
