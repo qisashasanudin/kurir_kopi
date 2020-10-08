@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.brown[50],
       appBar: AppBar(
-        title: Text('Kurir Kopi'),
+        title: Text('KurirKopi'),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         actions: <Widget>[

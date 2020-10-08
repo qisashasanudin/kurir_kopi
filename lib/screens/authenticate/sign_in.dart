@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kurir_kopi/services/auth.dart';
+import 'package:kurir_kopi/shared/constants.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -25,7 +26,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Masuk ke Kurir Kopi'),
+        title: Text('Masuk ke KurirKopi'),
         actions: <Widget>[
           FlatButton.icon(
               onPressed: () {
@@ -37,51 +38,58 @@ class _SignInState extends State<SignIn> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 20.0),
-              TextFormField(
-                validator: (val) => val.isEmpty ? 'Masukkan email' : null,
-                onChanged: (val) {
-                  setState(() => email = val);
-                },
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                    validator: (val) => val.isEmpty ? 'Masukkan email' : null,
+                    onChanged: (val) {
+                      setState(() => email = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Password'),
+                    obscureText: true,
+                    validator: (val) => val.length < 6
+                        ? 'Masukkan password (6 huruf atau lebih)'
+                        : null,
+                    onChanged: (val) {
+                      setState(() => password = val);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  RaisedButton(
+                    color: Colors.brown[400],
+                    child: Text(
+                      'Masuk',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        print('valid');
+                        dynamic result =
+                            await _auth.signInWithEmail(email, password);
+                        if (result == null) {
+                          setState(() => error = 'Data tidak sesuai.');
+                        }
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  ),
+                ],
               ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                obscureText: true,
-                validator: (val) => val.length < 6
-                    ? 'Masukkan password (6 huruf atau lebih)'
-                    : null,
-                onChanged: (val) {
-                  setState(() => password = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              RaisedButton(
-                color: Colors.brown[400],
-                child: Text(
-                  'Masuk',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    print('valid');
-                    dynamic result =
-                        await _auth.signInWithEmail(email, password);
-                    if (result == null) {
-                      setState(() => error = 'Data tidak sesuai.');
-                    }
-                  }
-                },
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                error,
-                style: TextStyle(color: Colors.red, fontSize: 14.0),
-              ),
-            ],
+            ),
           ),
         ),
       ),
