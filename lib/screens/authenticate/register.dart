@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:kurir_kopi/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
 
   //text field state
+  String firstname = '';
+  String lastname = '';
   String email = '';
   String password = '';
 
@@ -23,14 +25,14 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Masuk ke Kurir Kopi'),
+        title: Text('Daftar ke Kurir Kopi'),
         actions: <Widget>[
           FlatButton.icon(
               onPressed: () {
                 widget.toggleView();
               },
               icon: Icon(Icons.person),
-              label: Text('Daftar'))
+              label: Text('Masuk'))
         ],
       ),
       body: Container(
@@ -38,6 +40,18 @@ class _SignInState extends State<SignIn> {
         child: Form(
           child: Column(
             children: <Widget>[
+              SizedBox(height: 20.0),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() => firstname = val);
+                },
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() => lastname = val);
+                },
+              ),
               SizedBox(height: 20.0),
               TextFormField(
                 onChanged: (val) {
@@ -55,7 +69,7 @@ class _SignInState extends State<SignIn> {
               RaisedButton(
                 color: Colors.brown[400],
                 child: Text(
-                  'Masuk',
+                  'Daftar',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
