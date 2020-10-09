@@ -34,20 +34,28 @@ class Home extends StatelessWidget {
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(
+              onPressed: () => _showSettingsPanel(),
+              icon: Icon(Icons.settings),
+              label: Text('Ubah'),
+            ),
+            FlatButton.icon(
               onPressed: () async {
                 await _auth.signOut();
               },
               icon: Icon(Icons.person),
               label: Text('Keluar'),
             ),
-            FlatButton.icon(
-              onPressed: () => _showSettingsPanel(),
-              icon: Icon(Icons.settings),
-              label: Text('Pengaturan'),
-            ),
           ],
         ),
-        body: BrewList(),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/coffee_bg.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: BrewList(),
+        ),
       ),
     );
   }
