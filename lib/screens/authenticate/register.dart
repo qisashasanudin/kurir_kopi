@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kurir_kopi/services/auth.dart';
 import 'package:kurir_kopi/shared/constants.dart';
+import 'package:kurir_kopi/shared/loading.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -13,6 +15,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   //text field state
   String name = '';
@@ -22,89 +25,124 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
-      appBar: AppBar(
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-        title: Text('Daftar ke KurirKopi'),
-        actions: <Widget>[
-          FlatButton.icon(
-              onPressed: () {
-                widget.toggleView();
-              },
-              icon: Icon(Icons.person),
-              label: Text('Masuk'))
-        ],
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                    validator: (val) => val.isEmpty ? 'Masukkan email' : null,
-                    onChanged: (val) {
-                      setState(() => email = val);
-                    },
+    if (loading) {
+      return Loading();
+    } else {
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          backgroundColor: Colors.white,
+          body: Container(
+            decoration: authenticationBackground,
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/images (1).jpg",
+                        height: 120,
+                        width: 120,
+                        fit: BoxFit.fill,
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'Email'),
+                        validator: (val) =>
+                            val.isEmpty ? 'Masukkan email' : null,
+                        onChanged: (val) {
+                          setState(() => email = val);
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'Password'),
+                        obscureText: true,
+                        validator: (val) => val.length < 6
+                            ? 'Masukkan password (6 huruf atau lebih)'
+                            : null,
+                        onChanged: (val) {
+                          setState(() => password = val);
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Konfirmasi password'),
+                        obscureText: true,
+                        validator: (val) => val != password
+                            ? 'Kedua password harus sama'
+                            : null,
+                        onChanged: (val) {
+                          setState(() => password = val);
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          color: Colors.yellow[700],
+                          child: Text(
+                            'Daftar',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              setState(() {
+                                loading = true;
+                              });
+                              dynamic result = await _auth.registerWithEmail(
+                                  email, password);
+                              if (result == null) {
+                                setState(() {
+                                  error = 'Registrasi tidak berhasil.';
+                                  loading = false;
+                                });
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                      Text(
+                        error,
+                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                      ),
+                      SizedBox(height: 20.0),
+                      InkWell(
+                        child: Container(
+                          child: Text(
+                            'Sudah memiliki akun? Login di sini.',
+                            style: TextStyle(
+                              color: Colors.yellow[800],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          widget.toggleView();
+                        },
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration:
-                        textInputDecoration.copyWith(hintText: 'Password'),
-                    obscureText: true,
-                    validator: (val) => val.length < 6
-                        ? 'Masukkan password (6 huruf atau lebih)'
-                        : null,
-                    onChanged: (val) {
-                      setState(() => password = val);
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(
-                        hintText: 'Konfirmasi password'),
-                    obscureText: true,
-                    validator: (val) =>
-                        val != password ? 'Kedua password harus sama' : null,
-                    onChanged: (val) {
-                      setState(() => password = val);
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  RaisedButton(
-                    color: Colors.brown[400],
-                    child: Text(
-                      'Daftar',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        dynamic result =
-                            await _auth.registerWithEmail(email, password);
-                        if (result == null) {
-                          setState(
-                              () => error = 'Email tidak dapat digunakan.');
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  Text(
-                    error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

@@ -11,6 +11,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('KurirKopi'),
         backgroundColor: Colors.brown[400],
+        centerTitle: true,
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
