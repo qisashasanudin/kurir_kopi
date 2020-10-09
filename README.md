@@ -5,4 +5,4 @@ credit: The Net Ninja
 
 ## Screenshots:
 
-![](/screenshots/screenshot (1).png) ![](/screenshots/screenshot (2).png) ![](/screenshots/screenshot (3).png) ![](/screenshots/screenshot (4).png)
+![](/screenshots/screenshot1.png) ![](/screenshots/screenshot2.png) ![](/screenshots/screenshot3.png) ![](/screenshots/screenshot4.png)
