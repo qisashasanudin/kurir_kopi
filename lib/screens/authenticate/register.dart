@@ -37,8 +37,14 @@ class _RegisterState extends State<Register> {
                     onPressed: () {
                       widget.toggleView();
                     },
-                    icon: Icon(Icons.person),
-                    label: Text('Masuk'))
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      'Masuk',
+                      style: TextStyle(color: Colors.white),
+                    ))
               ],
             ),
             body: Container(
@@ -49,6 +55,14 @@ class _RegisterState extends State<Register> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                        SizedBox(height: 20.0),
+                        Container(
+                          child: Image.asset(
+                            'assets/coffee_logo1.png',
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         SizedBox(height: 20.0),
                         TextFormField(
                           decoration:

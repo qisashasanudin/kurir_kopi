@@ -32,7 +32,7 @@ class _SettingsFormState extends State<SettingsForm> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Ubah Preferensi',
+                    'Ubah Preferensi Anda',
                     style: TextStyle(fontSize: 18.0),
                   ),
                   SizedBox(height: 20.0),

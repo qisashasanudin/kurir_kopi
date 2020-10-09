@@ -36,8 +36,14 @@ class _SignInState extends State<SignIn> {
                     onPressed: () {
                       widget.toggleView();
                     },
-                    icon: Icon(Icons.person),
-                    label: Text('Daftar'))
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      'Daftar',
+                      style: TextStyle(color: Colors.white),
+                    ))
               ],
             ),
             body: Container(
@@ -48,6 +54,14 @@ class _SignInState extends State<SignIn> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                        SizedBox(height: 20.0),
+                        Container(
+                          child: Image.asset(
+                            'assets/coffee_logo1.png',
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         SizedBox(height: 20.0),
                         TextFormField(
                           decoration:

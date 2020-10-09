@@ -35,15 +35,27 @@ class Home extends StatelessWidget {
           actions: <Widget>[
             FlatButton.icon(
               onPressed: () => _showSettingsPanel(),
-              icon: Icon(Icons.settings),
-              label: Text('Ubah'),
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              label: Text(
+                'Ubah',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             FlatButton.icon(
               onPressed: () async {
                 await _auth.signOut();
               },
-              icon: Icon(Icons.person),
-              label: Text('Keluar'),
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              label: Text(
+                'Keluar',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
